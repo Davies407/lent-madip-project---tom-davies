@@ -58,6 +58,7 @@ mySprite = sprites.create(img`
     `, SpriteKind.Player)
 controller.moveSprite(mySprite, 200, 200)
 mySprite.setStayInScreen(true)
+mySprite.setPosition(8, 50)
 info.startCountdown(40)
 info.setLife(3)
 scene.setBackgroundImage(img`
@@ -182,7 +183,7 @@ scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     `)
-game.onUpdateInterval(2000, function () {
+game.onUpdateInterval(5000, function () {
     enemy1 = sprites.create(img`
         ........................
         ........................
@@ -209,5 +210,8 @@ game.onUpdateInterval(2000, function () {
         ........................
         ........................
         `, SpriteKind.Enemy)
-    enemy1.setVelocity(0, 100)
+    enemy1.setVelocity(-100, 0)
+    enemy1.left = scene.screenWidth()
+    enemy1.x = scene.screenHeight()
+    enemy1.setFlag(SpriteFlag.AutoDestroy, true)
 })
