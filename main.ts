@@ -34,6 +34,15 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         ....44444.......................
         `, mySprite, 200, 0)
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    enemy1.destroy()
+    info.changeScoreBy(1)
+    enemy1.destroy(effects.fire, 500)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    mySprite.destroy()
+    info.changeLifeBy(-1)
+})
 let enemy1: Sprite = null
 let projectile2: Sprite = null
 let mySprite: Sprite = null
@@ -60,7 +69,7 @@ controller.moveSprite(mySprite, 200, 200)
 mySprite.setStayInScreen(true)
 mySprite.setPosition(8, 50)
 info.startCountdown(40)
-info.setLife(3)
+info.setLife(1)
 scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
@@ -183,7 +192,7 @@ scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     `)
-game.onUpdateInterval(5000, function () {
+game.onUpdateInterval(500, function () {
     enemy1 = sprites.create(img`
         ........................
         ........................
@@ -214,4 +223,5 @@ game.onUpdateInterval(5000, function () {
     enemy1.left = scene.screenWidth()
     enemy1.x = scene.screenHeight()
     enemy1.setFlag(SpriteFlag.AutoDestroy, true)
+    mySprite.y = randint(0, scene.screenHeight())
 })
