@@ -24,7 +24,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     enemy1.destroy(effects.fire, 500)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    mySprite.destroy()
+    otherSprite.destroy()
     info.changeLifeBy(-1)
 })
 let enemy1: Sprite = null
