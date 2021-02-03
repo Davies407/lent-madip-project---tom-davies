@@ -18,15 +18,19 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . c c . . 
         `, mySprite, 200, 0)
 })
+statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
+    status.spriteAttachedTo().destroy()
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    enemy1.destroy()
+    sprite.destroy()
     info.changeScoreBy(1)
-    enemy1.destroy(effects.fire, 500)
+    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, enemy1).value += -20
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
     info.changeLifeBy(-1)
 })
+let statusbar: StatusBarSprite = null
 let enemy1: Sprite = null
 let projectile2: Sprite = null
 let mySprite: Sprite = null
@@ -176,7 +180,7 @@ scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     `)
-game.onUpdateInterval(500, function () {
+game.onUpdateInterval(1000, function () {
     enemy1 = sprites.create(img`
         ........................
         ........................
@@ -203,9 +207,11 @@ game.onUpdateInterval(500, function () {
         ........................
         ........................
         `, SpriteKind.Enemy)
-    enemy1.setVelocity(-100, 0)
+    enemy1.setVelocity(-50, 0)
     enemy1.left = scene.screenWidth()
     enemy1.x = scene.screenHeight()
     enemy1.setFlag(SpriteFlag.AutoDestroy, true)
     enemy1.y = randint(0, scene.screenHeight())
+    statusbar = statusbars.create(20, 2, StatusBarKind.EnemyHealth)
+    statusbar.attachToSprite(enemy1)
 })
