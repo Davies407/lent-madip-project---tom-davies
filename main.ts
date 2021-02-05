@@ -24,7 +24,7 @@ statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprite.destroy()
     info.changeScoreBy(1)
-    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, enemy1).value += -20
+    statusbars.getStatusBarAttachedTo(StatusBarKind.EnemyHealth, otherSprite).value += -20
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
